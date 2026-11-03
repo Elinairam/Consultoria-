@@ -50,7 +50,7 @@ body::after {
 
 body::before {
   z-index: -2;
-  background-image: url("./foto-consultoria.png");
+  background-image: url("./foto-consultoria.png?v=2");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -60,7 +60,7 @@ body::before {
 
 body::after {
   z-index: -1;
-  background: rgba(20, 36, 8, 0.76);
+  background: rgba(20, 36, 8, 0.5);
 }
 
 [hidden] {
@@ -742,4 +742,4 @@ button.calendar-date {
   html {
     scroll-behavior: auto;
   }
-}
+     }
