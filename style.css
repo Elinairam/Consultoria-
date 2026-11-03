@@ -50,7 +50,7 @@ body::after {
 
 body::before {
   z-index: -2;
-  background-image: url("./assets/foto-consultoria.png");
+  background-image: url("./foto-consultoria.png");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
