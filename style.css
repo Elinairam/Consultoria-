@@ -1,0 +1,745 @@
+/* =====================================
+   IDENTIDADE VISUAL ELAIRUM
+===================================== */
+
+:root {
+  --verde-escuro: #142408;
+  --verde-floresta: #283D1C;
+  --verde-lima: #D7FF00;
+  --fundo-claro: #F7F7F5;
+  --branco: #FFFFFF;
+  --texto-suave: #656B60;
+  --borda: #D9DED2;
+
+  --fonte-titulo: "Anton", sans-serif;
+  --fonte-texto: "DM Sans", sans-serif;
+  --fonte-manuscrita: "Caveat", cursive;
+}
+
+
+/* BASE */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 20px;
+}
+
+body {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--verde-escuro);
+  font-family: var(--fonte-texto);
+  font-size: 13px;
+  line-height: 1.5;
+  background: var(--verde-escuro);
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+body::before {
+  z-index: -2;
+  background-image: url("./assets/foto-consultoria.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: blur(2px);
+  transform: scale(1.02);
+}
+
+body::after {
+  z-index: -1;
+  background: rgba(20, 36, 8, 0.76);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--verde-floresta);
+  outline-offset: 2px;
+}
+
+
+/* CABEÇALHO */
+
+.site-header {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 14px 6%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(20, 36, 8, 0.25);
+  color: var(--branco);
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--fonte-titulo);
+  font-size: 1.4rem;
+  line-height: 1;
+  letter-spacing: 0.025em;
+}
+
+.brand span {
+  margin-top: 4px;
+  color: var(--verde-lima);
+  font-family: var(--fonte-texto);
+  font-size: 0.53rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.header-link {
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.header-link:hover {
+  color: var(--verde-lima);
+}
+
+
+/* LAYOUT PRINCIPAL: DUAS COLUNAS */
+
+.main-layout {
+  width: min(1120px, 100%);
+  min-height: calc(100vh - 130px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(350px, 0.82fr);
+  align-items: center;
+  gap: clamp(30px, 5vw, 65px);
+  margin: 0 auto;
+  padding: 40px 6%;
+}
+
+
+/* APRESENTAÇÃO À ESQUERDA */
+
+.hero {
+  color: var(--branco);
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.hero .eyebrow {
+  color: var(--verde-lima);
+}
+
+.handwritten {
+  margin: 0 0 8px;
+  color: var(--verde-lima);
+  font-family: var(--fonte-manuscrita);
+  font-size: 1.6rem;
+  line-height: 1.2;
+}
+
+.hero h1 {
+  max-width: 520px;
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.12;
+}
+
+.hero-description {
+  max-width: 440px;
+  margin: 17px 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.88rem;
+  line-height: 1.8;
+}
+
+.hero-details {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 22px;
+  color: var(--verde-lima);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.detail-dot {
+  opacity: 0.7;
+}
+
+
+/* BOTÕES */
+
+.button {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  padding: 11px 17px;
+  border: 0;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  transition: background 0.2s ease;
+}
+
+.button-lime {
+  background: var(--verde-lima);
+  color: var(--verde-escuro);
+}
+
+.button-lime:hover {
+  background: var(--branco);
+}
+
+
+/* CARTÃO DO FORMULÁRIO À DIREITA */
+
+.booking-section {
+  width: 100%;
+  min-width: 0;
+}
+
+.form-card {
+  width: 100%;
+  padding: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 5px;
+  background: rgba(247, 247, 245, 0.97);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.16);
+}
+
+.form-card-heading {
+  margin-bottom: 16px;
+}
+
+.form-step {
+  color: var(--verde-floresta);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.form-card-heading h2 {
+  margin: 4px 0;
+  font-family: var(--fonte-titulo);
+  font-size: 1.75rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.form-card-heading p {
+  margin: 5px 0 0;
+  color: var(--texto-suave);
+  font-size: 0.77rem;
+}
+
+
+/* CAMPOS DO FORMULÁRIO */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 12px;
+}
+
+.form-group {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 11px;
+}
+
+.form-group label {
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: 36px;
+  padding: 8px 9px;
+  border: 1px solid var(--borda);
+  border-radius: 3px;
+  background: var(--branco);
+  color: var(--verde-escuro);
+  font-size: 0.75rem;
+}
+
+.form-group textarea {
+  min-height: 55px;
+  resize: vertical;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #898E84;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--verde-floresta);
+  outline: 2px solid rgba(40, 61, 28, 0.12);
+}
+
+
+/* CALENDÁRIO */
+
+.form-fieldset {
+  min-width: 0;
+  margin: 8px 0 15px;
+  padding: 0;
+  border: 0;
+}
+
+.form-fieldset legend {
+  margin-bottom: 5px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.field-help {
+  margin: 0 0 10px;
+  color: var(--texto-suave);
+  font-size: 0.69rem;
+}
+
+.calendar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 9px;
+  font-size: 0.67rem;
+}
+
+.calendar-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.legend-dot {
+  width: 7px;
+  height: 7px;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.legend-dot.available {
+  background: var(--verde-floresta);
+}
+
+.legend-dot.unavailable {
+  background: #B7BDB1;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.calendar-weekday {
+  padding: 4px 0;
+  color: var(--texto-suave);
+  font-size: 0.64rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.calendar-date {
+  min-width: 0;
+  min-height: 38px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 2px 0;
+  border: 1px solid var(--borda);
+  border-radius: 3px;
+  background: #ECEEE9;
+  color: #858B80;
+}
+
+button.calendar-date {
+  cursor: pointer;
+}
+
+.calendar-date.available {
+  border-color: #C6D0B9;
+  background: #EDF2E7;
+  color: var(--verde-escuro);
+}
+
+.calendar-date.available:hover {
+  background: #E0EACF;
+}
+
+.calendar-date.selected {
+  border: 2px solid var(--verde-escuro);
+  background: var(--verde-lima);
+  color: var(--verde-escuro);
+}
+
+.calendar-date.unavailable {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.day-number {
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.day-month {
+  font-size: 0.49rem;
+}
+
+.availability-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--verde-floresta);
+}
+
+.calendar-date.unavailable .availability-dot {
+  background: #A9AFA4;
+}
+
+
+/* HORÁRIO */
+
+.calendar-times {
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid var(--borda);
+  border-radius: 3px;
+  background: #EBEEE7;
+}
+
+.selected-date-label {
+  margin: 0 0 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.calendar-time-option {
+  width: 100%;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 11px;
+  border: 1px solid var(--verde-floresta);
+  border-radius: 3px;
+  background: var(--branco);
+  color: var(--verde-escuro);
+  cursor: pointer;
+  text-align: left;
+}
+
+.calendar-time-option strong {
+  font-size: 0.85rem;
+}
+
+.calendar-time-option span {
+  font-size: 0.66rem;
+}
+
+.calendar-time-option:hover,
+.calendar-time-option.selected {
+  background: var(--verde-lima);
+}
+
+.calendar-note,
+.form-disclaimer {
+  margin: 8px 0 0;
+  color: var(--texto-suave);
+  font-size: 0.66rem;
+}
+
+.form-error {
+  margin: 9px 0 0;
+  color: #A12620;
+  font-size: 0.73rem;
+}
+
+
+/* CONSENTIMENTO E ENVIO */
+
+.privacy-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+}
+
+.privacy-consent input {
+  flex-shrink: 0;
+  margin-top: 3px;
+  accent-color: var(--verde-floresta);
+}
+
+.privacy-consent label {
+  color: var(--texto-suave);
+  font-size: 0.66rem;
+  line-height: 1.45;
+}
+
+.submit-button {
+  width: 100%;
+  margin-top: 13px;
+}
+
+.form-disclaimer {
+  text-align: center;
+}
+
+
+/* CONFIRMAÇÃO */
+
+.confirmation-section {
+  width: min(540px, 90%);
+  align-self: center;
+  justify-self: center;
+  grid-column: 1 / -1;
+  padding: 28px;
+  border-radius: 5px;
+  background: rgba(247, 247, 245, 0.97);
+  color: var(--verde-escuro);
+  text-align: center;
+}
+
+.confirmation-mark {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background: var(--verde-lima);
+  font-size: 1.3rem;
+}
+
+.confirmation-section .eyebrow {
+  color: var(--verde-floresta);
+}
+
+.confirmation-section h2 {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-size: 1.9rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.confirmation-section > p {
+  font-size: 0.82rem;
+}
+
+.confirmation-details {
+  display: grid;
+  gap: 6px;
+  margin: 18px 0;
+  padding: 16px;
+  background: #EBEEE7;
+}
+
+.confirmation-details p {
+  margin: 5px 0 0;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+}
+
+.confirmation-details strong {
+  font-size: 0.85rem;
+}
+
+.confirmation-note {
+  color: var(--verde-floresta);
+  font-size: 0.75rem;
+}
+
+
+/* RODAPÉ */
+
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 18px 6%;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(20, 36, 8, 0.55);
+  color: var(--branco);
+}
+
+.footer-brand {
+  font-size: 1.1rem;
+}
+
+.site-footer p,
+.site-footer > span {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.68rem;
+}
+
+
+/* TABLETS */
+
+@media (max-width: 850px) {
+  .main-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.95fr);
+    gap: 25px;
+    padding: 35px 4%;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 4.2vw, 2.8rem);
+  }
+
+  .form-card {
+    padding: 17px;
+  }
+}
+
+
+/* CELULARES */
+
+@media (max-width: 680px) {
+  .site-header {
+    min-height: 62px;
+    padding: 13px 5%;
+  }
+
+  .brand {
+    font-size: 1.2rem;
+  }
+
+  .header-link {
+    font-size: 0.7rem;
+  }
+
+  .main-layout {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 35px 5% 40px;
+  }
+
+  .hero {
+    padding: 8px 0;
+  }
+
+  .hero h1 {
+    max-width: 500px;
+    font-size: clamp(2.2rem, 9vw, 3.2rem);
+  }
+
+  .hero-description {
+    font-size: 0.85rem;
+  }
+
+  .booking-section {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .form-card {
+    padding: 20px;
+  }
+
+  .form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .confirmation-section {
+    grid-column: 1;
+  }
+}
+
+
+/* CELULARES PEQUENOS */
+
+@media (max-width: 380px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-days {
+    gap: 3px;
+  }
+
+  .calendar-date {
+    min-height: 35px;
+  }
+
+  .day-number {
+    font-size: 0.7rem;
+  }
+
+  .day-month {
+    font-size: 0.45rem;
+  }
+
+  .site-footer {
+    flex-wrap: wrap;
+  }
+}
+
+
+/* ACESSIBILIDADE */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

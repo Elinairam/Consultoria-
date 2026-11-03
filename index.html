@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Consultoria gratuita Elairum Multicultural para criadoras estrangeiras que querem trabalhar com marcas no Brasil."
+  >
+
+  <title>Consultoria | Elairum Multicultural</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@500;600&family=DM+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+
+  <!-- CABEÇALHO -->
+  <header class="site-header" id="inicio">
+    <a class="brand" href="#inicio">
+      ELAIRUM
+      <span>MULTICULTURAL</span>
+    </a>
+
+    <a class="header-link" href="#formulario">
+      Agendar consultoria ↗
+    </a>
+  </header>
+
+
+  <main class="main-layout">
+
+    <!-- COLUNA ESQUERDA: APRESENTAÇÃO -->
+    <section class="hero">
+
+      <p class="eyebrow">
+        PARA CRIADORAS ESTRANGEIRAS NO BRASIL
+      </p>
+
+      <p class="handwritten">Vamos conversar?</p>
+
+      <h1>
+        Seu próximo passo para trabalhar com marcas no Brasil.
+      </h1>
+
+      <p class="hero-description">
+        Uma conversa gratuita de 30 minutos para entender seu
+        momento, identificar seu principal desafio e descobrir
+        por onde começar.
+      </p>
+
+      <div class="hero-details">
+        <span>30 minutos</span>
+        <span class="detail-dot">•</span>
+        <span>Online</span>
+        <span class="detail-dot">•</span>
+        <span>Gratuita</span>
+      </div>
+
+      <a class="button button-lime" href="#formulario">
+        QUERO AGENDAR <span>↘</span>
+      </a>
+
+    </section>
+
+
+    <!-- COLUNA DIREITA: FORMULÁRIO -->
+    <section class="booking-section" id="formulario">
+
+      <div class="form-card">
+
+        <div class="form-card-heading">
+          <span class="form-step">CONSULTORIA GRATUITA</span>
+          <h2>Vamos agendar?</h2>
+          <p>Preencha seus dados e escolha seu horário.</p>
+        </div>
+
+
+        <form id="consultoria-form">
+
+          <div class="form-grid">
+
+            <div class="form-group">
+              <label for="nome">Nome</label>
+              <input
+                type="text"
+                id="nome"
+                name="nome"
+                placeholder="Seu nome"
+                autocomplete="name"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="voce@email.com"
+                autocomplete="email"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="telefone">WhatsApp com DDI</label>
+              <input
+                type="tel"
+                id="telefone"
+                name="telefone"
+                placeholder="+55 11 99999-9999"
+                autocomplete="tel"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="portfolio">Tem portfólio?</label>
+              <select id="portfolio" name="portfolio" required>
+                <option value="">Selecione</option>
+                <option value="Sim">Sim</option>
+                <option value="Em construção">Em construção</option>
+                <option value="Não">Ainda não</option>
+              </select>
+            </div>
+
+          </div>
+
+
+          <div class="form-group">
+            <label for="marcas">
+              Já trabalha com marcas no Brasil?
+            </label>
+
+            <select id="marcas" name="marcas" required>
+              <option value="">Selecione</option>
+              <option value="Sim">Sim, já trabalho</option>
+              <option value="Algumas oportunidades">
+                Já tive algumas oportunidades
+              </option>
+              <option value="Ainda não">Ainda não</option>
+            </select>
+          </div>
+
+
+          <div class="form-group">
+            <label for="desafio">Seu maior desafio hoje</label>
+
+            <textarea
+              id="desafio"
+              name="desafio"
+              rows="2"
+              placeholder="Conte um pouquinho..."
+              required
+            ></textarea>
+          </div>
+
+
+          <!-- CALENDÁRIO -->
+          <fieldset class="form-fieldset">
+
+            <legend>Escolha seu horário</legend>
+
+            <p class="field-help">
+              Próximos 30 dias · Segundas e quintas · 10h (Brasília)
+            </p>
+
+            <div class="calendar-legend">
+              <span>
+                <i class="legend-dot available"></i>
+                Disponível
+              </span>
+
+              <span>
+                <i class="legend-dot unavailable"></i>
+                Indisponível
+              </span>
+            </div>
+
+            <div
+              id="calendar-days"
+              class="calendar-days"
+              aria-label="Calendário dos próximos 30 dias"
+            >
+              <p>Carregando calendário...</p>
+            </div>
+
+            <div
+              id="calendar-times"
+              class="calendar-times"
+              hidden
+            >
+              <p
+                id="selected-date-label"
+                class="selected-date-label"
+              >
+                Escolha seu horário:
+              </p>
+
+              <button
+                type="button"
+                id="horario-10"
+                class="calendar-time-option"
+                aria-pressed="false"
+              >
+                <strong>10:00</strong>
+                <span>30 minutos</span>
+              </button>
+            </div>
+
+            <input
+              type="hidden"
+              id="data-consultoria"
+              name="data-consultoria"
+              required
+            >
+
+            <input
+              type="hidden"
+              id="horario-consultoria"
+              name="horario-consultoria"
+              required
+            >
+
+            <p
+              id="erro-horario"
+              class="form-error"
+              role="alert"
+              hidden
+            >
+              Escolha uma data e um horário.
+            </p>
+
+          </fieldset>
+
+
+          <div class="privacy-consent">
+            <input
+              type="checkbox"
+              id="consentimento"
+              name="consentimento"
+              required
+            >
+
+            <label for="consentimento">
+              Concordo com o uso dos meus dados para organizar
+              esta consultoria.
+            </label>
+          </div>
+
+
+          <button
+            type="submit"
+            class="button button-lime submit-button"
+          >
+            SOLICITAR CONSULTORIA ↗
+          </button>
+
+          <p class="form-disclaimer">
+            Gratuita · Individual · 30 minutos
+          </p>
+
+        </form>
+
+      </div>
+    </section>
+
+
+    <!-- CONFIRMAÇÃO -->
+    <section
+      id="confirmacao"
+      class="confirmation-section"
+      tabindex="-1"
+      hidden
+    >
+      <div class="confirmation-mark">✓</div>
+
+      <p class="eyebrow">OBRIGADA PELA CONFIANÇA</p>
+
+      <h2>Vamos dar esse próximo passo juntas?</h2>
+
+      <p id="mensagem-confirmacao"></p>
+
+      <div class="confirmation-details">
+        <p>SUA DATA</p>
+        <strong id="confirmacao-data"></strong>
+
+        <p>HORÁRIO DE BRASÍLIA</p>
+        <strong id="confirmacao-hora"></strong>
+      </div>
+
+      <p>
+        Já deixe suas dúvidas anotadas para aproveitarmos
+        ao máximo nossos 30 minutos.
+      </p>
+
+      <p id="status-agendamento" class="confirmation-note"></p>
+
+      <a href="#inicio" class="button button-lime">
+        VOLTAR AO INÍCIO
+      </a>
+    </section>
+
+  </main>
+
+
+  <footer class="site-footer">
+    <a class="brand footer-brand" href="#inicio">
+      ELAIRUM
+      <span>MULTICULTURAL</span>
+    </a>
+
+    <p>Conexões que abrem caminhos.</p>
+
+    <span>© <span id="ano-atual"></span> Elairum</span>
+  </footer>
+
+</body>
+</html>
