@@ -9,6 +9,15 @@ const HORARIO_CONSULTORIA = "10:00";
 // Exemplo: ["2026-11-02"]
 const datasIndisponiveis = [];
 
+// =====================================================
+// ÚNICA COISA QUE VOCÊ PRECISA EDITAR NESTE ARQUIVO:
+// cole entre as aspas a URL do Apps Script (termina em /exec).
+// =====================================================
+const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbyoyNJZdQP4TFI7bRnXFZpblmc1VNUWC1-hRr2ybK47fxY4I82grOVJg84dXxIstsgj/exec";
+
+// Datas já reservadas por outras pessoas (vêm da planilha).
+let datasOcupadas = [];
+
 
 /* =====================================
    ELEMENTOS
@@ -110,7 +119,10 @@ function horarioJaPassou(dataISO) {
 
 
 function dataEstaOcupada(dataISO) {
-  return datasIndisponiveis.includes(dataISO);
+  return (
+    datasIndisponiveis.includes(dataISO) ||
+    datasOcupadas.includes(dataISO)
+  );
 }
 
 
@@ -332,23 +344,87 @@ function validarHorario() {
 
 
 /* =====================================
-   ENVIAR FORMULÁRIO
+   COMUNICAÇÃO COM A PLANILHA
 ===================================== */
 
-formulario.addEventListener("submit", (evento) => {
-  evento.preventDefault();
+function urlConfigurada() {
+  return URL_SCRIPT.startsWith("https://script.google.com/");
+}
 
-  if (!validarHorario()) {
+
+async function carregarDatasOcupadas() {
+  if (!urlConfigurada()) {
     return;
   }
 
-  if (!formulario.reportValidity()) {
-    return;
+  try {
+    const resposta = await fetch(`${URL_SCRIPT}?acao=datas`, {
+      cache: "no-store"
+    });
+
+    const resultado = await resposta.json();
+
+    if (Array.isArray(resultado.ocupadas)) {
+      datasOcupadas = resultado.ocupadas;
+    }
+  } catch (erro) {
+    console.error("Não foi possível carregar as datas ocupadas:", erro);
   }
+}
 
-  const dados = new FormData(formulario);
-  const nome = String(dados.get("nome") || "").trim();
 
+async function enviarPedido(pedido) {
+  const controlador = new AbortController();
+
+  const temporizador = setTimeout(() => {
+    controlador.abort();
+  }, 20000);
+
+  try {
+    const resposta = await fetch(URL_SCRIPT, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(pedido),
+      signal: controlador.signal
+    });
+
+    return await resposta.json();
+  } finally {
+    clearTimeout(temporizador);
+  }
+}
+
+
+/* =====================================
+   MENSAGENS DE ERRO DO ENVIO
+===================================== */
+
+const botaoEnviar = formulario.querySelector(".submit-button");
+
+const erroEnvio = document.createElement("p");
+erroEnvio.className = "form-error";
+erroEnvio.setAttribute("role", "alert");
+erroEnvio.hidden = true;
+
+botaoEnviar.insertAdjacentElement("afterend", erroEnvio);
+
+
+function mostrarErroEnvio(mensagem) {
+  erroEnvio.textContent = mensagem;
+  erroEnvio.hidden = false;
+
+  erroEnvio.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+}
+
+
+/* =====================================
+   MOSTRAR CONFIRMAÇÃO
+===================================== */
+
+function mostrarConfirmacao(nome) {
   confirmacaoData.textContent =
     capitalizar(formatarDataLonga(dataSelecionada));
 
@@ -356,10 +432,10 @@ formulario.addEventListener("submit", (evento) => {
     `${horarioSelecionado} — Horário de Brasília`;
 
   mensagemConfirmacao.textContent =
-    `Obrigada pela confiança, ${nome}! Sua solicitação foi preenchida com sucesso.`;
+    `Obrigada pela confiança, ${nome}! Sua solicitação foi registrada com sucesso.`;
 
   statusAgendamento.textContent =
-    "Esta é uma confirmação visual de demonstração. Para garantir sua vaga e registrar seus dados, precisamos conectar o formulário a um serviço de agendamento.";
+    "Sua solicitação foi registrada e esse horário já está reservado para você.";
 
   secaoFormulario.hidden = true;
   secaoConfirmacao.hidden = false;
@@ -370,6 +446,90 @@ formulario.addEventListener("submit", (evento) => {
     behavior: "smooth",
     block: "start"
   });
+}
+
+
+/* =====================================
+   ENVIAR FORMULÁRIO
+===================================== */
+
+formulario.addEventListener("submit", async (evento) => {
+  evento.preventDefault();
+
+  erroEnvio.hidden = true;
+
+  if (!validarHorario()) {
+    return;
+  }
+
+  if (!formulario.reportValidity()) {
+    return;
+  }
+
+  if (!urlConfigurada()) {
+    console.error("URL_SCRIPT ainda não foi configurada no script.js.");
+
+    mostrarErroEnvio(
+      "O envio ainda não está ativo. Tente novamente mais tarde."
+    );
+
+    return;
+  }
+
+  const dados = new FormData(formulario);
+
+  const pedido = {
+    data: dataSelecionada,
+    horario: horarioSelecionado,
+    nome: String(dados.get("nome") || "").trim(),
+    email: String(dados.get("email") || "").trim(),
+    telefone: String(dados.get("telefone") || "").trim(),
+    portfolio: String(dados.get("portfolio") || "").trim(),
+    marcas: String(dados.get("marcas") || "").trim(),
+    desafio: String(dados.get("desafio") || "").trim(),
+    consentimento: true
+  };
+
+  const textoOriginal = botaoEnviar.textContent;
+
+  botaoEnviar.disabled = true;
+  botaoEnviar.textContent = "ENVIANDO...";
+
+  try {
+    const resultado = await enviarPedido(pedido);
+
+    if (resultado.ok) {
+      mostrarConfirmacao(pedido.nome);
+      return;
+    }
+
+    if (resultado.erro === "ocupada") {
+      datasOcupadas.push(pedido.data);
+
+      limparSelecao();
+      gerarCalendario();
+
+      mostrarErroEnvio(
+        "Essa data acabou de ser reservada por outra pessoa. Escolha outra data."
+      );
+
+      return;
+    }
+
+    mostrarErroEnvio(
+      resultado.mensagem ||
+      "Não conseguimos enviar agora. Tente novamente."
+    );
+  } catch (erro) {
+    console.error("Erro ao enviar o pedido:", erro);
+
+    mostrarErroEnvio(
+      "Não conseguimos enviar agora. Verifique sua conexão e tente de novo."
+    );
+  } finally {
+    botaoEnviar.disabled = false;
+    botaoEnviar.textContent = textoOriginal;
+  }
 });
 
 
@@ -377,4 +537,4 @@ formulario.addEventListener("submit", (evento) => {
    INICIALIZAÇÃO
 ===================================== */
 
-gerarCalendario();
+carregarDatasOcupadas().then(gerarCalendario);
